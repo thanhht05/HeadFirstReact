@@ -1,0 +1,22 @@
+.footer {
+  height: 60px;
+  background: #0f172a; /* tối hơn header */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  color: #94a3b8;
+  font-size: 14px;
+  position: sticky;
+}
+
+.footer-right a {
+  color: #94a3b8;
+  text-decoration: none;
+  margin-left: 20px;
+  transition: color 0.3s;
+}
+
+.footer-right a:hover {
+  color: #38bdf8;
+}

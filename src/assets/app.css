@@ -1,0 +1,18 @@
+.container {
+  padding-top: 30px;
+  background: #ccc;
+  height: 500px;
+  width: 700px;
+  margin: auto;
+}
+
+.container input {
+  padding: 6px;
+  margin-right: 10px;
+}
+.container button {
+  padding: 4px;
+  width: 80px;
+  cursor: pointer;
+  background-color: aqua;
+}
