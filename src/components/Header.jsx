@@ -12,11 +12,14 @@ import UserTable from "./User";
 import Product from "./Books";
 import { AuthContext } from "./context/AuthContext";
 import { logoutApi } from "../services/apiService";
+import { useSelector } from "react-redux";
 
 // import "./header.css";
 const Header = () => {
   const [current, setCurrent] = useState("home");
-  const { user, setUser } = useContext(AuthContext);
+  // const { user, setUser } = useContext(AuthContext);
+  const user = useSelector((state) => state.user.listUsers);
+  console.log("user redux heaer ", user);
   const navigate = useNavigate();
 
   const onClick = (e) => {

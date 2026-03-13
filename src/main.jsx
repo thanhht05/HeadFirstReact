@@ -12,6 +12,8 @@ import LoginPage from "./pages/LoginPage";
 import { AuthWrapper } from "./components/context/AuthContext";
 import PrivateRoute from "./pages/PrivateRoute";
 import BookPage from "./pages/BookPage";
+import { Provider } from "react-redux";
+import store from "./redux/stores/store";
 
 const router = createBrowserRouter([
   {
@@ -51,10 +53,15 @@ const router = createBrowserRouter([
   },
 ]);
 
+// createRoot(document.getElementById("root")).render(
+//   <Provider store={store}>
+//     <RouterProvider router={router} />
+//   </Provider>,
+// );
 createRoot(document.getElementById("root")).render(
-  // <StrictMode>
-  <AuthWrapper>
-    <RouterProvider router={router} />,
-  </AuthWrapper>,
-  // </StrictMode>,
+  <Provider store={store}>
+    <AuthWrapper>
+      <RouterProvider router={router} />
+    </AuthWrapper>
+  </Provider>,
 );

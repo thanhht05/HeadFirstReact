@@ -8,29 +8,19 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "./components/context/AuthContext";
 import { Spin } from "antd";
 
-function App() {
-  const { setUser, isAppLoading, setIsAppLoading } = useContext(AuthContext);
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      await delay(1000); // giả lập network chậm
-      const res = await getAccountApi();
+import { useDispatch } from "react-redux";
+import { fetchAllUsers } from "./redux/action/actions";
 
-      if (res.data) {
-        setUser({
-          id: res.data.userLogin.id,
-          email: res.data.userLogin.email,
-          fullName: res.data.userLogin.fullname,
-          role: {
-            name: res.data.userLogin.role.name,
-          },
-        });
-      }
-      setIsAppLoading(false);
-    };
-    // setInterval(() => {}, interval);
-    fetchUserInfo();
-  }, []);
+function App() {
+  const { isAppLoading, setIsAppLoading } = useContext(AuthContext);
+  // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllUsers());
+    setIsAppLoading(false);
+  });
 
   return (
     <>
