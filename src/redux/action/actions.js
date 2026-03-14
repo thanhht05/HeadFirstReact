@@ -4,6 +4,7 @@ import {
   FETCH_USER_REQUEST,
   FETCH_USER_SUCCESS,
 } from "../action/types";
+
 export const fetchAllUsers = () => {
   return async (dispatch) => {
     dispatch(fetcUsershRequest());

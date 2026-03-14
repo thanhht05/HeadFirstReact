@@ -7,6 +7,7 @@ import { getAccountApi } from "./services/apiService";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./components/context/AuthContext";
 import { Spin } from "antd";
+import { useSelector } from "react-redux";
 
 import { useDispatch } from "react-redux";
 import { fetchAllUsers } from "./redux/action/actions";
@@ -16,30 +17,40 @@ function App() {
   // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.user.isLoading);
+  const isError = useSelector((state) => state.user.isError);
 
   useEffect(() => {
     dispatch(fetchAllUsers());
     setIsAppLoading(false);
-  });
+  }, []);
 
   return (
     <>
-      {isAppLoading === true ? (
-        <div
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <Spin />
-        </div>
+      {isError == true ? (
+        <>
+          <h1>Error</h1>
+        </>
       ) : (
         <>
-          <Header />
-          <Outlet />
-          <Footer />
+          {isLoading == true ? (
+            <div
+              style={{
+                position: "fixed",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <Spin />
+            </div>
+          ) : (
+            <>
+              <Header />
+              <Outlet />
+              <Footer />
+            </>
+          )}
         </>
       )}
     </>
