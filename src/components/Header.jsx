@@ -20,7 +20,6 @@ const Header = () => {
   // const { user, setUser } = useContext(AuthContext);
   const user = useSelector((state) => state.user.listUsers);
 
-  console.log("user redux heaer ", user);
   const navigate = useNavigate();
 
   const onClick = (e) => {

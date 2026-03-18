@@ -1,37 +1,57 @@
-import { Button, Input, notification, Modal } from "antd";
-import { useState } from "react";
+import { Button, Input, notification, Modal, Form } from "antd";
+import { useEffect, useState } from "react";
 import { createUserApi } from "../services/apiService";
+import { createUserRedux } from "../redux/action/actions";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useForm } from "antd/es/form/Form";
 
 const UserForm = ({ loadUser }) => {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
+  const [form] = Form.useForm();
+
+  const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleCreateUser = async () => {
-    const res = await createUserApi(fullName, email, password, phone);
-    if (res.data) {
-      notification.success({
-        message: "create user",
-        description: "ok",
-      });
-      resetAndCloseModal();
-      await loadUser();
-    } else {
-      notification.error({
-        message: "error create user",
-        description: JSON.stringify(res.message),
-      });
-    }
+  const handleCreateUser = (values) => {
+    const { fullName, email, password, phone } = values;
+    dispatch(createUserRedux(fullName, email, password, phone));
   };
   const resetAndCloseModal = () => {
     setIsModalOpen(false);
-    setEmail("");
-    setFullName("");
-    setPassword("");
-    setPhone("");
+    form.resetFields();
+    // setEmail("");
+    // setFullName("");
+    // setPassword("");
+    // setPhone("");
   };
+  const isCreated = useSelector((state) => state.user.isCreated);
+  const isErrorCreateUser = useSelector(
+    (state) => state.user.isErrorCreateUser,
+  );
+
+  console.log("isErorr", isErrorCreateUser);
+  console.log("isCreate", isCreated);
+  useEffect(() => {
+    if (isCreated) {
+      notification.success({
+        message: "Success",
+        description: "User created successfully!",
+      });
+
+      resetAndCloseModal();
+
+      // dispatch({ type: RESET_CREATE_USER });
+    }
+  }, [isCreated]);
+
+  useEffect(() => {
+    if (isErrorCreateUser) {
+      notification.error({
+        message: "Error",
+        description: "Create user failed!",
+      });
+    }
+  }, [isErrorCreateUser]);
   return (
     <div style={{ padding: "10px" }}>
       <div style={{ textAlign: "right" }}>
@@ -44,42 +64,50 @@ const UserForm = ({ loadUser }) => {
         title="Create user"
         closable={{ "aria-label": "Custom Close Button" }}
         open={isModalOpen}
-        onOk={handleCreateUser}
+        onOk={true}
         onCancel={() => resetAndCloseModal(false)}
-        okText="Create"
+        footer={null}
       >
-        <div>
-          <label>Email</label>
-          <Input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter email"
-          />
-        </div>
-        <div>
-          <label>Fullname</label>
-          <Input
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            placeholder="Enter fullName"
-          />
-        </div>
-        <div>
-          <label>phone</label>
-          <Input
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="Enter phone"
-          />
-        </div>
-        <div>
-          <label>Password</label>
-          <Input.Password
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-          />
-        </div>
+        <Form form={form} onFinish={handleCreateUser}>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: "Please input emai!" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="FulName"
+            name="fullName"
+            rules={[{ required: true, message: "Please input fullName !" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Phone"
+            name="phone"
+            rules={[{ required: true, message: "Please input phone !" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please input password !" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item label={null}>
+            <Button
+              style={{ marginTop: "20px" }}
+              type="primary"
+              htmlType="submit"
+            >
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
       </Modal>
     </div>
   );

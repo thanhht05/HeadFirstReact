@@ -1,8 +1,11 @@
-import { fetchAllUserApi } from "../../services/apiService";
+import { fetchAllUserApi, createUserApi } from "../../services/apiService";
 import {
   FETCH_USER_ERROR,
   FETCH_USER_REQUEST,
   FETCH_USER_SUCCESS,
+  CREATE_USER_ERROR,
+  CREATE_USER_REQUEST,
+  CREATE_USER_SUCCESS,
 } from "../action/types";
 
 export const fetchAllUsers = () => {
@@ -11,8 +14,6 @@ export const fetchAllUsers = () => {
 
     try {
       const res = await fetchAllUserApi();
-
-      console.log("API data:", res.data);
 
       dispatch(fetcUsersSuccess(res.data.results));
     } catch (error) {
@@ -34,5 +35,44 @@ export const fetcUsersSuccess = (payload) => {
 export const fetcUsersError = () => {
   return {
     type: FETCH_USER_ERROR,
+  };
+};
+// CREATE USER
+
+export const createUserRedux = (fullName, email, password, phone) => {
+  return async (dispatch) => {
+    dispatch(createUserRequest());
+
+    try {
+      const res = await createUserApi(fullName, email, password, phone);
+
+      if (res && res.data) {
+        console.log("API data create user:", res.data);
+
+        dispatch(createUserSuccess(res.data));
+
+        dispatch(fetchAllUsers()); // refresh list
+      }
+    } catch (error) {
+      dispatch(createUserError());
+    }
+  };
+};
+export const createUserRequest = () => {
+  return {
+    type: CREATE_USER_REQUEST,
+  };
+};
+export const createUserError = () => {
+  return {
+    type: CREATE_USER_ERROR,
+  };
+};
+
+export const createUserSuccess = (payload) => {
+  return {
+    type: CREATE_USER_SUCCESS,
+
+    payload,
   };
 };
