@@ -8,7 +8,7 @@ import {
   Select,
 } from "antd";
 import { useEffect, useState } from "react";
-import { createProductAPi, uploadFileApi } from "../services/apiService";
+import { createProductAPi, uploadFileApi } from "../../services/apiService";
 import { useForm } from "antd/es/form/Form";
 const ProductFromUncontrolle = ({ loadProduct, page, pageSize }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

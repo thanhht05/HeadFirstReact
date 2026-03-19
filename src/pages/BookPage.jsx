@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import BookTable from "../components/BookTable";
-import ProductForm from "../components/ProductForm";
-import ProductFromUncontrolle from "../components/ProductFormUncontrolle";
+import BookTable from "../components/products/BookTable";
+import ProductForm from "../components/products/ProductForm";
+import ProductFromUncontrolle from "../components/products/ProductFormUncontrolle";
 import { fetchAllProduct } from "../services/apiService";
 
 const BookPage = () => {

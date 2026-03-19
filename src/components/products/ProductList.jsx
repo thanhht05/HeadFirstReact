@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
-import { fetchAllProduct } from "../services/apiService";
+import { fetchAllProduct } from "../../services/apiService";
 import { Pagination } from "antd";
 
 const ProductList = () => {

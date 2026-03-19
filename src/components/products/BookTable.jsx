@@ -1,11 +1,13 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Flex, Space, Table, Tag } from "antd";
-import ProductDetailModal from "../layouts/BookDetailModal";
+import { Flex, Modal, Space, Table, Tag } from "antd";
+import ProductDetailModal from "../../layouts/BookDetailModal";
 import { Link } from "react-router-dom";
-import DeleUserPopup from "../layouts/DeleUserPopup";
-import DeleteBookPopup from "../layouts/DeleteBookPopup";
+import DeleUserPopup from "../../layouts/DeleUserPopup";
+import DeleteBookPopup from "../../layouts/DeleteBookPopup";
 import { Button } from "antd";
 import { useState } from "react";
+import UpdateUserModal from "../../layouts/UpdateUserModal";
+import UpdateBookModal from "../../layouts/UpdateBookModal";
 
 const BookTable = ({
   productData,
@@ -21,7 +23,11 @@ const BookTable = ({
   const [bookDetails, setBookDetails] = useState({});
 
   const [deleteBookData, setDeleteBookData] = useState(null);
-  console.log(page, pageSize, totalElements);
+
+  const [isModalUpdateBookOpen, setIsModalUpdateBookOpen] = useState(false);
+
+  const [bookDataUpdate, setBookDataUpdate] = useState(null);
+
   const columns = [
     {
       title: "Id",
@@ -61,7 +67,13 @@ const BookTable = ({
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a>
+          <a
+            onClick={() => {
+              console.log("reocder side bootabkle", record);
+              setIsModalUpdateBookOpen(true);
+              setBookDataUpdate(record);
+            }}
+          >
             <EditOutlined />
           </a>
           <a onClick={() => setDeleteBookData(record.id)}>
@@ -98,6 +110,12 @@ const BookTable = ({
         bookDetails={bookDetails}
         isModalBookDetailOpen={isModalBookDetailOpen}
         setIsModalBookDetailOpen={setIsModalBookDetailOpen}
+      />
+
+      <UpdateBookModal
+        isModalUpdateBookOpen={isModalUpdateBookOpen}
+        bookDataUpdate={bookDataUpdate}
+        setIsModalUpdateBookOpen={setIsModalUpdateBookOpen}
       />
     </>
   );

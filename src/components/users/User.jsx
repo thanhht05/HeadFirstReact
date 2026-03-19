@@ -1,10 +1,10 @@
 import { Flex, Space, Table, Tag } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import UpdateUserModal from "../layouts/UpdateUserModal";
+import UpdateUserModal from "../../layouts/UpdateUserModal";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import UserDetailModal from "../layouts/UserDetailModal";
-import DeleUserPopup from "../layouts/DeleUserPopup";
+import UserDetailModal from "../../layouts/UserDetailModal";
+import DeleUserPopup from "../../layouts/DeleUserPopup";
 const UserTable = ({ dataUsers, loadUser }) => {
   const [isModalUpdateOpen, serIsModalUpdateOpen] = useState(false);
   const [userDataUpdate, setUserDataUpdate] = useState(null);

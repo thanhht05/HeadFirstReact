@@ -1,7 +1,7 @@
 import { Button, Input, notification, Modal, Form } from "antd";
 import { useEffect, useState } from "react";
-import { createUserApi } from "../services/apiService";
-import { createUserRedux } from "../redux/action/actions";
+import { createUserApi } from "../../services/apiService";
+import { createUserRedux } from "../../redux/action/actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useForm } from "antd/es/form/Form";

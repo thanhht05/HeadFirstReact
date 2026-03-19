@@ -1,7 +1,7 @@
 import { Button, Modal, Form, Input, Select, Space, notification } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useEffect, useState } from "react";
-import { createProductAPi, uploadFileApi } from "../services/apiService";
+import { createProductAPi, uploadFileApi } from "../../services/apiService";
 
 const ProductForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

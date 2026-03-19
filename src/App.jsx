@@ -1,7 +1,7 @@
 import "./assets/root.css";
 import "./assets/app.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
 import { Outlet } from "react-router-dom";
 import { getAccountApi } from "./services/apiService";
 import { useContext, useEffect } from "react";

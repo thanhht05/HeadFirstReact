@@ -8,10 +8,10 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { useContext, useState } from "react";
-import UserTable from "./User";
-import Product from "./Books";
-import { AuthContext } from "./context/AuthContext";
-import { logoutApi } from "../services/apiService";
+import UserTable from "../users/User";
+import Product from "../products/Books";
+import { AuthContext } from "../context/AuthContext";
+import { logoutApi } from "../../services/apiService";
 import { useSelector } from "react-redux";
 
 // import "./header.css";
