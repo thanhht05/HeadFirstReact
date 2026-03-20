@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
 import UserTable from "../components/users/User";
 import UserForm from "../components/users/UserForm";
-import { fetchAllUserApi } from "../services/apiService";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllUsers } from "../redux/action/actions";
+import { useEffect } from "react";
 
 const UserPage = () => {
-  const [dataUsers, setDataUsers] = useState([]);
+  const dispatch = useDispatch();
+  const listUsers = useSelector((state) => state.user.listUsers);
 
-  const loadUser = async () => {
-    const res = await fetchAllUserApi();
-    // debugger;
-    setDataUsers(res.data.results);
+  const loadUser = () => {
+    dispatch(fetchAllUsers());
   };
   useEffect(() => {
     loadUser();
@@ -17,7 +17,7 @@ const UserPage = () => {
   return (
     <div>
       <UserForm loadUser={loadUser} />
-      <UserTable dataUsers={dataUsers} loadUser={loadUser} />
+      <UserTable listUsers={listUsers} loadUser={loadUser} />
     </div>
   );
 };

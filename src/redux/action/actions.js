@@ -1,4 +1,8 @@
-import { fetchAllUserApi, createUserApi } from "../../services/apiService";
+import {
+  fetchAllUserApi,
+  createUserApi,
+  deleteUserByIdApi,
+} from "../../services/apiService";
 import {
   FETCH_USER_ERROR,
   FETCH_USER_REQUEST,
@@ -6,7 +10,11 @@ import {
   CREATE_USER_ERROR,
   CREATE_USER_REQUEST,
   CREATE_USER_SUCCESS,
+  SET_USER,
+  SET_LOADING,
+  DELETE_USER_SUCCESS,
 } from "../action/types";
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const fetchAllUsers = () => {
   return async (dispatch) => {
@@ -44,11 +52,10 @@ export const createUserRedux = (fullName, email, password, phone) => {
     dispatch(createUserRequest());
 
     try {
+      await delay(5000); // delay 2s
       const res = await createUserApi(fullName, email, password, phone);
 
       if (res && res.data) {
-        console.log("API data create user:", res.data);
-
         dispatch(createUserSuccess(res.data));
 
         dispatch(fetchAllUsers()); // refresh list
@@ -74,5 +81,43 @@ export const createUserSuccess = (payload) => {
     type: CREATE_USER_SUCCESS,
 
     payload,
+  };
+};
+
+// Set user
+// action creator
+export const setUser = (user) => {
+  return {
+    type: SET_USER,
+    payload: user,
+  };
+};
+
+export const setLoading = (status) => {
+  return {
+    type: SET_LOADING,
+    payload: status,
+  };
+};
+
+// delte user
+
+export const deleteUserRedux = (id) => {
+  return async (dispatch) => {
+    try {
+      const res = await deleteUserByIdApi(id);
+      if (res.data) {
+        dispatch(deleteUserSuccess());
+        dispatch(fetchAllUsers()); // refresh list
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const deleteUserSuccess = () => {
+  return {
+    type: DELETE_USER_SUCCESS,
   };
 };

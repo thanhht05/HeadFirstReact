@@ -6,12 +6,13 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useForm } from "antd/es/form/Form";
 
-const UserForm = ({ loadUser }) => {
+const UserForm = () => {
   const [form] = Form.useForm();
 
   const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const isCreating = useSelector((state) => state.user.isCreating);
   const handleCreateUser = (values) => {
     const { fullName, email, password, phone } = values;
     dispatch(createUserRedux(fullName, email, password, phone));
@@ -29,8 +30,6 @@ const UserForm = ({ loadUser }) => {
     (state) => state.user.isErrorCreateUser,
   );
 
-  console.log("isErorr", isErrorCreateUser);
-  console.log("isCreate", isCreated);
   useEffect(() => {
     if (isCreated) {
       notification.success({
@@ -100,6 +99,7 @@ const UserForm = ({ loadUser }) => {
 
           <Form.Item label={null}>
             <Button
+              disabled={isCreating}
               style={{ marginTop: "20px" }}
               type="primary"
               htmlType="submit"
